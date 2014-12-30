@@ -9,8 +9,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 import android.app.DialogFragment;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.spotify.sdk.android.Spotify;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
 import com.spotify.sdk.android.authentication.SpotifyAuthentication;
@@ -20,16 +24,24 @@ import com.spotify.sdk.android.playback.Player;
 import com.spotify.sdk.android.playback.PlayerNotificationCallback;
 import com.spotify.sdk.android.playback.PlayerState;
 
-
-public class PlaylistsActivity extends Activity   implements PlayerNotificationCallback, ConnectionStateCallback {
+public class PlaylistsActivity extends ActionBarActivity  implements PlayerNotificationCallback, ConnectionStateCallback, CreatePlaylistDialogFragment.NoticeDialogListener, View.OnClickListener {
     private static final String CLIENT_ID = "4dd6a9c11dbf412d944b981abb0f55ab";
     private Player mPlayer;
+    private Button btnQrScan;
+    private Button btnQrGenerate;
+    private Button btnQrGenerate2;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playlists);
+        btnQrScan = (Button)findViewById(R.id.btnQrScan);
+        btnQrScan.setOnClickListener(this);
+        btnQrGenerate = (Button)findViewById(R.id.btnQrGenerate);
+        btnQrGenerate.setOnClickListener(this);
+        btnQrGenerate2 = (Button)findViewById(R.id.btnQrGenerate2);
+        btnQrGenerate2.setOnClickListener(this);
     }
 
 
@@ -128,5 +140,61 @@ public class PlaylistsActivity extends Activity   implements PlayerNotificationC
     {
         DialogFragment newFragment = new CreatePlaylistDialogFragment();
         newFragment.show(getFragmentManager(), "CreatePlaylistDialogFragment");
+    }
+
+    // The dialog fragment receives a reference to this Activity through the
+    // Fragment.onAttach() callback, which it uses to call the following methods
+    // defined by the NoticeDialogFragment.NoticeDialogListener interface
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        // User touched the dialog's positive button
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+        dialog.getDialog().cancel();
+    }
+
+    public void onClick(View v){
+        if(v.getId()==R.id.btnQrScan)
+        {
+            IntentIntegrator scanIntegrator = new IntentIntegrator(this);
+            scanIntegrator.initiateScan(IntentIntegrator.QR_CODE_TYPES);
+        }
+        else if(v.getId() == R.id.btnQrGenerate)
+        {
+            IntentIntegrator scanIntegrator = new IntentIntegrator(this);
+            scanIntegrator.shareText("New years party", "TEXT_TYPE");
+        }
+        else if(v.getId() == R.id.btnQrGenerate2)
+        {
+            IntentIntegrator scanIntegrator = new IntentIntegrator(this);
+            scanIntegrator.shareText("24th Birthday", "TEXT_TYPE");
+        }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        if (scanningResult != null) {
+            String scanContent = scanningResult.getContents();
+            String scanFormat = scanningResult.getFormatName();
+            if(IntentIntegrator.QR_CODE_TYPES.contains(scanFormat))
+            {
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Scan content received: " + scanContent, Toast.LENGTH_SHORT);
+                toast.show();
+            }
+            else
+            {
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Incorrect scan format received!", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        }
+        else{
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    "No scan data received!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 }
