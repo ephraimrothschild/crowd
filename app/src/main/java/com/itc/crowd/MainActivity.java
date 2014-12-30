@@ -6,73 +6,53 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
+import android.app.ActivityManager;
+import android.content.ComponentName;
 
 import com.spotify.sdk.android.Spotify;
-import com.spotify.sdk.android.authentication.AuthenticationResponse;
 import com.spotify.sdk.android.authentication.SpotifyAuthentication;
 import com.spotify.sdk.android.playback.ConnectionStateCallback;
-import com.spotify.sdk.android.playback.Player;
 import com.spotify.sdk.android.playback.PlayerNotificationCallback;
 import com.spotify.sdk.android.playback.PlayerState;
-import com.spotify.sdk.android.playback.Config;
 
 
 public class MainActivity extends Activity implements PlayerNotificationCallback, ConnectionStateCallback{
 
     private static final String CLIENT_ID = "4dd6a9c11dbf412d944b981abb0f55ab";
     private static final String REDIRECT_URI = "crowd://callback";
-    private Player mPlayer;
+    private static MainActivity THISCLASS = null;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-//        Button button = (Button) findViewById(R.id.spotifyConnectButton);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                SpotifyAuthentication.openAuthWindow(CLIENT_ID, "token", REDIRECT_URI,
-//                new String[]{"user-read-private", "streaming"}, null, this);
-//            }
-//        });
-
-//
+        ImageButton button = (ImageButton) findViewById(R.id.spotifyConnectButton);
+        this.THISCLASS = this;
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SpotifyAuthentication.openAuthWindow(CLIENT_ID, "token", REDIRECT_URI,
+                        new String[]{"user-read-private", "streaming"}, null, THISCLASS);
+            }
+        });
+    }
+    @Override
+    protected void onNewIntent(Intent intent) {
+        Log.d("test", "started intent");
+        super.onNewIntent(intent);
+        Uri uri = intent.getData();
+            if (uri != null) {Intent myIntent = new Intent(MainActivity.this, PlaylistsActivity.class);
+//                myIntent.putExtra("key", value); //Optional parameters
+                MainActivity.this.startActivity(myIntent);
+        }
     }
 
     @Override
     protected void onDestroy() {
         Spotify.destroyPlayer(this);
         super.onDestroy();
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        Log.d("test","started intent");
-        super.onNewIntent(intent);
-        Uri uri = intent.getData();
-        if (uri != null) {
-            AuthenticationResponse response = SpotifyAuthentication.parseOauthResponse(uri);
-            Config playerConfig = new Config(this, response.getAccessToken(), CLIENT_ID);
-            Spotify spotify = new Spotify();
-            Log.d("test", "made spotify object");
-            mPlayer = spotify.getPlayer(playerConfig, this, new Player.InitializationObserver() {
-                @Override
-                public void onInitialized() {
-                    Log.d("test","begin initialized spotify player");
-                    mPlayer.addConnectionStateCallback(MainActivity.this);
-                    mPlayer.addPlayerNotificationCallback(MainActivity.this);
-                    mPlayer.play("spotify:track:2TpxZ7JUBn3uw46aR7qd6V");
-                    Log.d("test","end initialized spotify player");
-                }
-
-                @Override
-                public void onError(Throwable throwable) {
-                    Log.e("MainActivity", "Could not initialize player: " + throwable.getMessage());
-                }
-            });
-        }
     }
 
     @Override
