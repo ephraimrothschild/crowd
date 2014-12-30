@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_hovered="true" android:drawable="@drawable/home_screen_button_on_click">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="100dip" />
+            <stroke android:width="4dp" android:color="#808080"/>
+        </shape>
+    </item>
+    <item android:state_pressed="true" android:drawable="@drawable/home_screen_button_on_click">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="100dip" />
+            <stroke android:width="4dp" android:color="#808080"/>
+        </shape>
+    </item>
+    <item android:drawable="@drawable/home_screen_button">
+        <shape android:shape="rectangle"
+            >
+            <corners android:radius="100dip" />
+        </shape>
+    </item>
+</selector>

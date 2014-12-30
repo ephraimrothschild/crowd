@@ -28,9 +28,17 @@ public class MainActivity extends Activity implements PlayerNotificationCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        SpotifyAuthentication.openAuthWindow(CLIENT_ID, "token", REDIRECT_URI,
-                new String[]{"user-read-private", "streaming"}, null, this);
+        setContentView(R.layout.login);
+//        Button button = (Button) findViewById(R.id.spotifyConnectButton);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                SpotifyAuthentication.openAuthWindow(CLIENT_ID, "token", REDIRECT_URI,
+//                new String[]{"user-read-private", "streaming"}, null, this);
+//            }
+//        });
+
+//
     }
 
     @Override
