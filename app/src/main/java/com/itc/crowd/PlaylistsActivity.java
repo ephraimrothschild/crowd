@@ -1,5 +1,6 @@
 package com.itc.crowd;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
@@ -18,7 +19,7 @@ import com.spotify.sdk.android.playback.PlayerNotificationCallback;
 import com.spotify.sdk.android.playback.PlayerState;
 
 
-public class PlaylistsActivity extends ActionBarActivity  implements PlayerNotificationCallback, ConnectionStateCallback {
+public class PlaylistsActivity extends Activity   implements PlayerNotificationCallback, ConnectionStateCallback {
     private static final String CLIENT_ID = "4dd6a9c11dbf412d944b981abb0f55ab";
     private Player mPlayer;
 
