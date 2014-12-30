@@ -6,7 +6,10 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.WindowManager;
+import android.widget.Button;
 
 public class CreatePlaylistDialogFragment extends DialogFragment {
     /* The activity that creates an instance of this dialog fragment must
@@ -57,8 +60,26 @@ public class CreatePlaylistDialogFragment extends DialogFragment {
                         mListener.onDialogNegativeClick(CreatePlaylistDialogFragment.this);
                     }
                 });
-        return builder.create();
+        AlertDialog dialog =  builder.create();
+        dialog.show();
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
 
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = 900;
+        dialog.getWindow().setAttributes(lp);
+
+        Button positiveButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+        if(positiveButton != null) {
+            positiveButton.setBackgroundColor(getResources().getColor(R.color.create_button_backgroundColor));
+            positiveButton.setTextColor(getResources().getColor(R.color.create_button_textColor));
+        }
+
+        Button negativeButton = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+        if(negativeButton != null) {
+            negativeButton.setTextColor(getResources().getColor(R.color.apptheme_color));
+        }
+
+        return dialog;
     }
 
 }

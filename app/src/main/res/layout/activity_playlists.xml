@@ -24,4 +24,13 @@
         android:layout_below="@+id/imageView2"
         android:layout_toStartOf="@+id/imageView2" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Temp button"
+        android:id="@+id/btnCreatePlaylist"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="onOpenCreatePlaylist" />
+
 </RelativeLayout>

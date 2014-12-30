@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.spotify.sdk.android.Spotify;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
@@ -120,5 +121,24 @@ public class PlaylistsActivity extends Activity   implements PlayerNotificationC
     @Override
     public void onPlaybackError(ErrorType errorType, String s) {
 
+    }
+
+    public void onOpenCreatePlaylist(View view)
+    {
+        DialogFragment newFragment = new CreatePlaylistDialogFragment();
+        newFragment.show(getFragmentManager(), "CreatePlaylistDialogFragment");
+    }
+
+    // The dialog fragment receives a reference to this Activity through the
+    // Fragment.onAttach() callback, which it uses to call the following methods
+    // defined by the NoticeDialogFragment.NoticeDialogListener interface
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        // User touched the dialog's positive button
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+        dialog.getDialog().cancel();
     }
 }
