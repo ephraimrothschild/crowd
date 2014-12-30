@@ -9,7 +9,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.spotify.sdk.android.Spotify;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
 import com.spotify.sdk.android.authentication.SpotifyAuthentication;
@@ -20,15 +24,18 @@ import com.spotify.sdk.android.playback.PlayerNotificationCallback;
 import com.spotify.sdk.android.playback.PlayerState;
 
 
-public class PlaylistsActivity extends ActionBarActivity  implements PlayerNotificationCallback, ConnectionStateCallback, CreatePlaylistDialogFragment.NoticeDialogListener {
+public class PlaylistsActivity extends ActionBarActivity  implements PlayerNotificationCallback, ConnectionStateCallback, CreatePlaylistDialogFragment.NoticeDialogListener, View.OnClickListener {
     private static final String CLIENT_ID = "4dd6a9c11dbf412d944b981abb0f55ab";
     private Player mPlayer;
+    private Button btnQrScan;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playlists);
+        btnQrScan = (Button)findViewById(R.id.btnQrScan);
+        btnQrScan.setOnClickListener(this);
     }
 
 
@@ -140,5 +147,37 @@ public class PlaylistsActivity extends ActionBarActivity  implements PlayerNotif
     @Override
     public void onDialogNegativeClick(DialogFragment dialog) {
         dialog.getDialog().cancel();
+    }
+
+    public void onClick(View v){
+        if(v.getId()==R.id.btnQrScan){
+            IntentIntegrator scanIntegrator = new IntentIntegrator(this);
+            scanIntegrator.initiateScan(IntentIntegrator.QR_CODE_TYPES);
+        }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        if (scanningResult != null) {
+            String scanContent = scanningResult.getContents();
+            String scanFormat = scanningResult.getFormatName();
+            if(IntentIntegrator.QR_CODE_TYPES.contains(scanFormat))
+            {
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Scan content received: " + scanContent, Toast.LENGTH_SHORT);
+                toast.show();
+            }
+            else
+            {
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Incorrect scan format received!", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        }
+        else{
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    "No scan data received!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 }
