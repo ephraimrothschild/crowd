@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.spotify.sdk.android.Spotify;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
@@ -27,8 +29,16 @@ public class MainActivity extends Activity implements PlayerNotificationCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-//        SpotifyAuthentication.openAuthWindow(CLIENT_ID, "token", REDIRECT_URI,
+//        Button button = (Button) findViewById(R.id.spotifyConnectButton);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                SpotifyAuthentication.openAuthWindow(CLIENT_ID, "token", REDIRECT_URI,
 //                new String[]{"user-read-private", "streaming"}, null, this);
+//            }
+//        });
+
+//
     }
 
     @Override
