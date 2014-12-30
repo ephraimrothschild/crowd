@@ -19,22 +19,11 @@ public class MainActivity extends Activity implements PlayerNotificationCallback
 
     private static final String CLIENT_ID = "4dd6a9c11dbf412d944b981abb0f55ab";
     private static final String REDIRECT_URI = "crowd://callback";
-    private static MainActivity THISCLASS = null;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-        ImageButton button = (ImageButton) findViewById(R.id.spotifyConnectButton);
-        this.THISCLASS = this;
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SpotifyAuthentication.openAuthWindow(CLIENT_ID, "token", REDIRECT_URI,
-                        new String[]{"user-read-private", "streaming"}, null, THISCLASS);
-            }
-        });
     }
     @Override
     protected void onNewIntent(Intent intent) {
@@ -91,6 +80,11 @@ public class MainActivity extends Activity implements PlayerNotificationCallback
     @Override
     public void onPlaybackError(ErrorType errorType, String s) {
 
+    }
+
+    public void runSpotifyAuth(View view) {
+        SpotifyAuthentication.openAuthWindow(CLIENT_ID, "token", REDIRECT_URI,
+                new String[]{"user-read-private", "streaming"}, null, this);
     }
 
 }

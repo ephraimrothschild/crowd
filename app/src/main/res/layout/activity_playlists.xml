@@ -1,10 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:layout_height="match_parent"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:background="@drawable/layer2"
     tools:context="com.itc.crowd.PlaylistsActivity">
 
     <ImageView
@@ -23,14 +20,54 @@
         android:id="@+id/imageView3"
         android:layout_below="@+id/imageView2"
         android:layout_toStartOf="@+id/imageView2" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:scaleType="fitCenter"
+        android:background="#27a496"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/imageView2"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="50dp" />
 
-    <Button
-        android:layout_width="wrap_content"
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:scaleType="fitCenter"
+        android:background="#1e8aaa"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-10dp" />
+
+    <ImageButton
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Temp button"
+        android:scaleType="fitCenter"
         android:id="@+id/btnCreatePlaylist"
+        android:background="@null"
+        android:src="@drawable/add_playlist"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:onClick="onOpenCreatePlaylist" />
+        android:onClick="onOpenCreatePlaylist"
+        android:layout_alignParentRight="false"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="140dp"
+        android:layout_marginBottom="-100dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="PLAYLISTS"
+        android:textSize="25dp"
+        android:paddingLeft="20dp"
+        android:textColor="#ffffff"
+        android:fontFamily="Open Sans Light"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/imageView2"
+        android:layout_alignParentStart="true" />
+
+
 
 </RelativeLayout>

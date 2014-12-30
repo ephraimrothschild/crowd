@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <family>
+        <nameset>
+            <name>open-sans-light</name>
+        </nameset>
+        <fileset>
+            <file>OpenSans-Light.ttf</file>
+        </fileset>
+    </family>
+</resources>
