@@ -33,6 +33,7 @@ public class PlaylistsActivity extends Activity  implements PlayerNotificationCa
     private Button btnQrGenerate2;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

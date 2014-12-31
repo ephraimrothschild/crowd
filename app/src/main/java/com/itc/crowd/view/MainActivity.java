@@ -5,10 +5,14 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.Toast;
 
+import com.itc.crowd.ApplicationContextProvider;
 import com.itc.crowd.GlobalConfig;
 import com.itc.crowd.R;
+import com.itc.crowd.StaticHelpers;
 import com.spotify.sdk.android.Spotify;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
 import com.spotify.sdk.android.authentication.SpotifyAuthentication;
@@ -19,6 +23,9 @@ import com.spotify.sdk.android.playback.PlayerState;
 
 
 public class MainActivity extends Activity implements PlayerNotificationCallback, ConnectionStateCallback{
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +42,10 @@ public class MainActivity extends Activity implements PlayerNotificationCallback
             Config playerConfig = new Config(this, response.getAccessToken(), getResources().getString(R.string.CLIENT_ID));
             GlobalConfig.getInstance().setPlayerConfig(playerConfig);
             //myIntent.putExtra("key", value); //Optional parameters
+
+            StaticHelpers.SPOTIFY_ACCESS_TOKEN = response.getAccessToken();
+
+
             Intent myIntent = new Intent(MainActivity.this, PlaylistsActivity.class);
             MainActivity.this.startActivity(myIntent);
         }
@@ -88,7 +99,9 @@ public class MainActivity extends Activity implements PlayerNotificationCallback
 
     public void runSpotifyAuth(View view) {
         SpotifyAuthentication.openAuthWindow(getResources().getString(R.string.CLIENT_ID), "token", getResources().getString(R.string.REDIRECT_URI),
-                new String[]{"user-read-private", "streaming"}, null, this);
+                new String[]{"user-read-private user-read-email", "streaming"}, null, this);
+
+
     }
 
 }

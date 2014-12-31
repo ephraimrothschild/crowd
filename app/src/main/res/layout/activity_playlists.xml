@@ -5,52 +5,54 @@
     tools:context="com.itc.crowd.view.PlaylistsActivity">
 
     <ImageView
+        android:id="@+id/imageView2"
         android:layout_width="110dp"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView2"
         android:src="@drawable/top_logo"
         android:layout_alignParentBottom="false"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="-32dp" />
 
-    <ImageView
-        android:layout_width="wrap_content"
+
+    <TextView
+        android:id="@+id/playlistTitle"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView3"
-        android:layout_below="@+id/imageView2"
-        android:layout_toStartOf="@+id/imageView2" />
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:scaleType="fitCenter"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="PLAYLISTS"
+        android:textSize="25dp"
+        android:paddingLeft="20dp"
+        android:textColor="#ffffff"
         android:background="#27a496"
-        android:layout_centerHorizontal="true"
+        android:fontFamily="Open Sans Light"
         android:layout_below="@+id/imageView2"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="50dp"
-        android:id="@+id/playlistsTitleBar"/>
+        android:layout_alignParentStart="true" />
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:divider="#b5b5b5"
+        android:dividerHeight="1dp"
+        android:layout_below="@+id/playlistTitle" />
+
 
     <ImageView
+        android:id="@+id/playlistsFooterBar"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:background="#1e8aaa"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/playlistsFooterBar"/>
+        android:layout_alignParentBottom="true"/>
 
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/playlistsScroll"
-        android:layout_below="@+id/playlistsTitleBar"
-        android:layout_above="@id/playlistsFooterBar" />
+
 
     <ImageButton
+        android:id="@+id/btnCreatePlaylist"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:scaleType="fitCenter"
-        android:id="@+id/btnCreatePlaylist"
         android:background="@null"
         android:src="@drawable/add_playlist_button"
         android:layout_alignParentBottom="true"
@@ -58,52 +60,21 @@
         android:onClick="onOpenCreatePlaylist"
         android:layout_alignBottom="@+id/playlistsFooterBar"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="PLAYLISTS"
-        android:textSize="25dp"
-        android:paddingLeft="20dp"
-        android:textColor="#ffffff"
-        android:fontFamily="Open Sans Light"
-        android:id="@+id/playlistTitle"
-        android:layout_below="@+id/imageView2"
-        android:layout_alignParentStart="true" />
+
 
 
 
     <ImageButton
+        android:id="@+id/btnQrScan"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:scaleType="fitCenter"
         android:background="@null"
         android:src="@drawable/join_playlist_button"
-        android:id="@+id/btnQrScan"
         android:layout_below="@+id/imageView2"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:onClick="onQRClick"/>
-
-    <!--<Button-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="QR Generate"-->
-        <!--android:id="@+id/btnQrGenerate"-->
-        <!--android:layout_below="@+id/btnQrScan"-->
-        <!--android:layout_alignEnd="@+id/btnQrScan"-->
-        <!--android:layout_marginEnd="46dp"-->
-        <!--android:layout_marginTop="43dp" />-->
-
-    <!--<Button-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="QR Generate 2"-->
-        <!--android:id="@+id/btnQrGenerate2"-->
-        <!--android:layout_marginTop="90dp"-->
-        <!--android:layout_below="@+id/btnQrGenerate"-->
-        <!--android:layout_alignStart="@+id/btnQrGenerate" />-->
-
 
 
 
