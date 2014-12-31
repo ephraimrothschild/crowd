@@ -67,7 +67,7 @@
         android:paddingLeft="20dp"
         android:textColor="#ffffff"
         android:fontFamily="Open Sans Light"
-        android:id="@+id/textView2"
+        android:id="@+id/playlistTitle"
         android:layout_below="@+id/imageView2"
         android:layout_alignParentStart="true" />
 
