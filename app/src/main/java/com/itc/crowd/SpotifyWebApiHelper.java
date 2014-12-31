@@ -2,12 +2,15 @@ package com.itc.crowd;
 
 import kaaes.spotify.webapi.android.SpotifyApi;
 import kaaes.spotify.webapi.android.SpotifyService;
+import kaaes.spotify.webapi.android.models.Album;
 import kaaes.spotify.webapi.android.models.Pager;
 import kaaes.spotify.webapi.android.models.Playlist;
 import kaaes.spotify.webapi.android.models.PlaylistTrack;
+import kaaes.spotify.webapi.android.models.Track;
 import kaaes.spotify.webapi.android.models.User;
+import retrofit.Callback;
 
-public final class PlaylistHelper {
+public final class SpotifyWebApiHelper {
     private SpotifyApi _spotifyApi;
     private User _user;
 
@@ -28,13 +31,18 @@ public final class PlaylistHelper {
         return _user;
     }
 
-    public Pager<Playlist> getPlaylists()
+    public void getPlaylists(Callback<Pager<Playlist>> callback)
     {
-        return getSpotifyApi().getService().getPlaylists(getUser().id);
+        getSpotifyApi().getService().getPlaylists(getUser().id, callback);
     }
 
-    public Pager<PlaylistTrack> getPlaylistTracks(Playlist playlist)
+    public void getPlaylistTracks(Playlist playlist, Callback<Pager<PlaylistTrack>> callback)
     {
-        return getSpotifyApi().getService().getPlaylistTracks(getUser().id, playlist.id);
+        getSpotifyApi().getService().getPlaylistTracks(getUser().id, playlist.id, callback);
+    }
+
+    public void getTrack(String trackId, Callback<Track> callback)
+    {
+        getSpotifyApi().getService().getTrack(trackId, callback);
     }
 }

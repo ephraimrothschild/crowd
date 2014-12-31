@@ -44,7 +44,9 @@
         android:layout_height="fill_parent"
         android:id="@+id/playlistsScroll"
         android:layout_below="@+id/playlistsTitleBar"
-        android:layout_above="@id/playlistsFooterBar" />
+        android:layout_above="@id/playlistsFooterBar" >
+
+    </ScrollView>
 
     <ImageButton
         android:layout_width="100dp"
@@ -84,6 +86,15 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:onClick="onQRClick"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/button"
+        android:layout_alignBottom="@+id/imageView3"
+        android:layout_toStartOf="@+id/imageView2"
+        android:onClick="onButtonClick"/>
 
     <!--<Button-->
         <!--android:layout_width="wrap_content"-->
