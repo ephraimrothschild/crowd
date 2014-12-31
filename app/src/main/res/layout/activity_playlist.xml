@@ -1,0 +1,58 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context="com.itc.crowd.playlist">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:scaleType="fitCenter"
+        android:background="#27a496"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/imageView2"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:id="@+id/playlistTitleBar"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="PLAYLISTS"
+        android:textSize="25dp"
+        android:paddingLeft="20dp"
+        android:textColor="#ffffff"
+        android:fontFamily="Open Sans Light"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/imageView2"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="13dp" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:scaleType="fitCenter"
+        android:background="#1e8aaa"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/playlistFooterBar"/>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/playlistScroll"
+        android:layout_below="@+id/playlistTitleBar"
+        android:layout_above="@id/playlistFooterBar" />
+
+    <ImageButton
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="fitCenter"
+        android:id="@+id/btnCreatePlaylist"
+        android:background="@null"
+        android:src="@drawable/add_playlist_button"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="onOpenCreatePlaylist"
+        android:layout_alignBottom="@+id/playlistFooterBar"/>
+
+
+</RelativeLayout>
