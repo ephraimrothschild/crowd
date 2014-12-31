@@ -39,12 +39,17 @@
         android:layout_alignParentBottom="true"
         android:id="@+id/playlistsFooterBar"/>
 
-    <ScrollView
+    <ListView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:id="@+id/playlistsScroll"
         android:layout_below="@+id/playlistsTitleBar"
-        android:layout_above="@id/playlistsFooterBar" />
+        android:layout_above="@id/playlistsFooterBar"
+        android:layout_weight="1"
+        tools:listitem="@layout/story_card"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="5.0sp"
+        android:paddingTop="5.0sp" />
 
     <ImageButton
         android:layout_width="100dp"
