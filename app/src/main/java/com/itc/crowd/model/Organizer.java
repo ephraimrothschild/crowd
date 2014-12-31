@@ -82,6 +82,36 @@ public class Organizer {
         }
         return sortedMap;
     }
+    public static HashMap<Integer, String> listPlaylists(JSONObject obj) {
+        HashMap<Integer, String> playlists = new HashMap<Integer,String>();
+        try {
+            JSONArray playListsArray = obj.getJSONArray("Playlist");
+           for (int i = 0; i < playListsArray.length(); i++) {
+               JSONObject currentPlayList = playListsArray.getJSONObject(i);
+               playlists.put(currentPlayList.getInt("id"),currentPlayList.getString("name"));
+           }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return playlists;
+    }
+
+    public static HashMap<Integer, LinkedHashMap<String, Integer>> createPlaylists(JSONObject obj) {
+        HashMap<Integer, LinkedHashMap<String, Integer>> playlists = new HashMap<Integer, LinkedHashMap<String, Integer>>();
+        try {
+            JSONArray playlistsArray = obj.getJSONArray("Playlists");
+            for (int i = 0; i < playlistsArray.length(); i++) {
+                JSONObject currentPlayList = playlistsArray.getJSONObject(i);
+                LinkedHashMap<String, Integer> playlist = new LinkedHashMap<String, Integer>();
+                addToList(playlist, currentPlayList.getJSONArray("songs"));
+                playlists.put(currentPlayList.getInt("id"),playlist);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return playlists;
+    }
+
 
 
 
