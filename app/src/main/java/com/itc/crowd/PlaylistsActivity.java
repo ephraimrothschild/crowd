@@ -25,7 +25,7 @@ import com.spotify.sdk.android.playback.Player;
 import com.spotify.sdk.android.playback.PlayerNotificationCallback;
 import com.spotify.sdk.android.playback.PlayerState;
 
-public class PlaylistsActivity extends ActionBarActivity  implements PlayerNotificationCallback, ConnectionStateCallback, CreatePlaylistDialogFragment.NoticeDialogListener, View.OnClickListener {
+public class PlaylistsActivity extends Activity  implements PlayerNotificationCallback, ConnectionStateCallback, CreatePlaylistDialogFragment.NoticeDialogListener, View.OnClickListener {
     private Player mPlayer;
     private ImageButton btnQrScan;
     private Button btnQrGenerate;
