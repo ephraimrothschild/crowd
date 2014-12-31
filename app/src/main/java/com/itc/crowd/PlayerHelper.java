@@ -11,13 +11,41 @@ import com.spotify.sdk.android.playback.PlayerNotificationCallback;
 import com.spotify.sdk.android.playback.PlayerState;
 import com.spotify.sdk.android.playback.PlayerStateCallback;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import kaaes.spotify.webapi.android.models.ArtistSimple;
+import kaaes.spotify.webapi.android.models.Image;
+import kaaes.spotify.webapi.android.models.Track;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 public class PlayerHelper extends Activity implements PlayerNotificationCallback, ConnectionStateCallback {
+
+    public interface PlayerHelperListener {
+        public void onTrackArtists(String artists);
+        public void onTrackName(String trackName);
+        public void onTrackAlbumImages(List<String> imageUrls);
+    }
+
     private Spotify _spotify;
     private Player _spotifyPlayer;
+    private SpotifyWebApiHelper _spotifyHelper;
+    PlayerHelperListener _listener;
+    private boolean _isCleaned;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    private SpotifyWebApiHelper getSpotifyHelper()
+    {
+        if(_spotifyHelper == null)
+        {
+            _spotifyHelper = new SpotifyWebApiHelper();
+        }
+        return _spotifyHelper;
+    }
+
+    public PlayerHelper()
+    {
         _spotify = new Spotify();
         _spotifyPlayer = _spotify.getPlayer(GlobalConfig.getInstance().getPlayerConfig(), this, new Player.InitializationObserver() {
             @Override
@@ -32,6 +60,27 @@ public class PlayerHelper extends Activity implements PlayerNotificationCallback
                 Log.e("PlayerHelper", "Could not initialize player: " + throwable.getMessage());
             }
         });
+        _isCleaned = false;
+    }
+
+    public void CleanUp()
+    {
+        if(_isCleaned)
+            return;
+        Spotify.destroyPlayer(this);
+        _isCleaned = true;
+    }
+
+    @Override
+    public void finalize()
+    {
+        if(!_isCleaned)
+            CleanUp();
+    }
+
+    public void AttachListener(PlayerHelperListener listener)
+    {
+        _listener = listener;
     }
 
     @Override
@@ -44,6 +93,15 @@ public class PlayerHelper extends Activity implements PlayerNotificationCallback
     @Override
     public void onPlaybackEvent(EventType eventType, PlayerState playerState) {
         Log.d("PlayerHelper", "Playback event received: " + eventType.name());
+        switch (eventType)
+        {
+            case TRACK_START:
+                if(_listener != null)
+                {
+                    processPlayerState(playerState);
+                }
+                break;
+        }
     }
 
     @Override
@@ -114,14 +172,18 @@ public class PlayerHelper extends Activity implements PlayerNotificationCallback
     private PlayerState _playerState;
     private PlayerState getPlayerState()
     {
-        final PlayerState result;
-        _spotifyPlayer.getPlayerState(new PlayerStateCallback() {
-            @Override
-            public void onPlayerState(PlayerState playerState) {
-                _playerState = playerState;
-            }
-        });
+        while(_playerState == null)
+        {
+            // Do nothing
+        }
         return _playerState;
+        //_spotifyPlayer.getPlayerState(new PlayerStateCallback() {
+        //    @Override
+        //    public void onPlayerState(PlayerState playerState) {
+        //        _playerState = playerState;
+        //    }
+        //});
+        //return _playerState;
     }
 
     public boolean getIsPlaying()
@@ -142,12 +204,44 @@ public class PlayerHelper extends Activity implements PlayerNotificationCallback
         return state.positionInMs;
     }
 
-    public String getCurrentTrackId()
+    private String getCurrentTrackId(PlayerState playerState)
     {
-        PlayerState state = getPlayerState();
-        if(!state.trackUri.startsWith("spotify:track:"))
+        if(!playerState.trackUri.startsWith("spotify:track:"))
             return null;
 
-        return state.trackUri.substring(state.trackUri.lastIndexOf(":")+1);
+        return playerState.trackUri.substring(playerState.trackUri.lastIndexOf(":")+1);
+    }
+
+    private void processPlayerState(PlayerState playerState)
+    {
+        if(_listener == null)
+            return;
+
+        String trackId = getCurrentTrackId(playerState);
+        getSpotifyHelper().getTrack(trackId, new Callback<Track>() {
+            @Override
+            public void success(Track track, Response response) {
+                Log.d("Track success", track.name);
+                String artists = "";
+                for (ArtistSimple currentArtist : track.artists) {
+                    artists += (currentArtist.name+", ");
+                }
+                artists = artists.substring(0, artists.length()-3);
+                _listener.onTrackArtists(artists);
+
+                _listener.onTrackName(track.name);
+
+                List<String> imageUrls = new ArrayList<String>();
+                for (Image currentImage : track.album.images) {
+                    imageUrls.add(currentImage.url);
+                }
+                _listener.onTrackAlbumImages(imageUrls);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("Track failure", error.toString());
+            }
+        });
     }
 }

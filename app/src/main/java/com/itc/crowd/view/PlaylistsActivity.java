@@ -19,6 +19,7 @@ import android.app.DialogFragment;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.itc.crowd.CreatePlaylistDialogFragment;
+import com.itc.crowd.PlayerHelper;
 import com.itc.crowd.R;
 import com.spotify.sdk.android.Spotify;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
@@ -29,7 +30,9 @@ import com.spotify.sdk.android.playback.Player;
 import com.spotify.sdk.android.playback.PlayerNotificationCallback;
 import com.spotify.sdk.android.playback.PlayerState;
 
-public class PlaylistsActivity extends Activity  implements PlayerNotificationCallback, ConnectionStateCallback, CreatePlaylistDialogFragment.NoticeDialogListener {
+import java.util.List;
+
+public class PlaylistsActivity extends Activity  implements PlayerNotificationCallback, ConnectionStateCallback, CreatePlaylistDialogFragment.NoticeDialogListener, PlayerHelper.PlayerHelperListener {
     private Player mPlayer;
     private ImageButton btnQrScan;
     private Button btnQrGenerate;
@@ -252,5 +255,29 @@ public class PlaylistsActivity extends Activity  implements PlayerNotificationCa
                     "No scan data received!", Toast.LENGTH_SHORT);
             toast.show();
         }
+    }
+
+    private PlayerHelper _playerHelper;
+    public void onButtonClick(View v)
+    {
+        _playerHelper = new PlayerHelper();
+        _playerHelper.AttachListener(this);
+        _playerHelper.PlayTrack("2TpxZ7JUBn3uw46aR7qd6V");
+    }
+
+    public void onTrackArtists(String artists)
+    {
+        Log.d("PlaylistsActivity", "Got artists event: " + artists);
+    }
+
+    public void onTrackName(String trackName)
+    {
+        Log.d("PlaylistsActivity", "Got track name event: " + trackName);
+    }
+
+    public void onTrackAlbumImages(List<String> imageUrls)
+    {
+        Log.d("PlaylistsActivity", "Got album images event.");
+        _playerHelper.CleanUp();
     }
 }

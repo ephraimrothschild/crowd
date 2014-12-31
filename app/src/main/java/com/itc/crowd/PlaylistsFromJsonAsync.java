@@ -23,7 +23,7 @@ import java.util.List;
 public class PlaylistsFromJsonAsync extends AsyncTask<Void, Integer, ArrayList<HashMap<String, String>>> {
 
     private List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-    private ArrayList<HashMap<String, String>> mapErrCode = new ArrayList<HashMap<String, String>>();
+    private ArrayList<HashMap<String, String>> playlists = new ArrayList<HashMap<String, String>>();
     private Activity activity;
     private String userMail;
 
@@ -59,37 +59,23 @@ public class PlaylistsFromJsonAsync extends AsyncTask<Void, Integer, ArrayList<H
         String json = request.getJsonFromUrl(StaticHelpers.API_URL + StaticHelpers.PLAYLISTS_ENDPOINT);
 
         if(json == null){
-            mapErrCode = null;
+            playlists = null;
         }
         else{
-            if(xml == "timeout"){
-
-                mapErrCode.put(MainActivity.KEY_TIMEOUT, "1");
-            }
-
-            else{
-
+            if(json != "timeout"){
                 Document doc = null;
                 try{
-                    doc = parser.getDomElement(xml); // getting DOM element
+                    doc = request.getDomElement(json); // getting DOM element
                 }
                 catch(DOMException e){
 
                 }
 
                 if(doc == null){
-                    mapErrCode = null;
+                    playlists = null;
                 }
                 else{
-                    NodeList nl_xml = doc.getElementsByTagName(MainActivity.KEY_XML);
-                    // looping through all xml nodes <KEY_USER>
-                    for (int i = 0; i < nl_xml.getLength(); i++) {
-                        // creating new HashMap
-
-                        Element e = (Element) nl_xml.item(i);
-                        // adding each child node to HashMap key => value
-                        mapErrCode.put(MainActivity.KEY_ERRCODE, parser.getValue(e, MainActivity.KEY_ERRCODE));
-                    }
+                    //PARSE JSON
                 }
             }
         }
@@ -100,22 +86,13 @@ public class PlaylistsFromJsonAsync extends AsyncTask<Void, Integer, ArrayList<H
     @SuppressLint("NewApi")
     protected void onPostExecute(HashMap<String, String>  result) {
 
-        if(result == null || result.containsKey(MainActivity.KEY_TIMEOUT)){
+        if(result == null){
 
-            MainActivity.displayToast(R.string.httpTimeOut);
-            activity.setProgressBarIndeterminateVisibility(false);
+
 
         }
         else{
-            if(result.get(MainActivity.KEY_ERRCODE).equals("000")){
-                MainActivity.fragment= new MyProfileFragment();
-                FragmentManager fragmentManager = activity.getFragmentManager();
-                fragmentManager.beginTransaction().setCustomAnimations(R.anim.slide_in_righttoleft, R.anim.slide_out_toptobottom,0,0).replace(R.id.frame_container, MainActivity.fragment).commit();
-
-            }
-            else{
-                MainActivity.displayToast(result.get(MainActivity.KEY_ERRCODE));
-            }
+            
             activity.setProgressBarIndeterminateVisibility(false);
         }
     }
