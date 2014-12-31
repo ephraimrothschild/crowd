@@ -9,16 +9,15 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.spotify.sdk.android.Spotify;
+import com.spotify.sdk.android.authentication.AuthenticationResponse;
 import com.spotify.sdk.android.authentication.SpotifyAuthentication;
+import com.spotify.sdk.android.playback.Config;
 import com.spotify.sdk.android.playback.ConnectionStateCallback;
 import com.spotify.sdk.android.playback.PlayerNotificationCallback;
 import com.spotify.sdk.android.playback.PlayerState;
 
 
 public class MainActivity extends Activity implements PlayerNotificationCallback, ConnectionStateCallback{
-
-    private static final String CLIENT_ID = "4dd6a9c11dbf412d944b981abb0f55ab";
-    private static final String REDIRECT_URI = "crowd://callback";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +29,13 @@ public class MainActivity extends Activity implements PlayerNotificationCallback
         Log.d("test", "started intent");
         super.onNewIntent(intent);
         Uri uri = intent.getData();
-            if (uri != null) {Intent myIntent = new Intent(MainActivity.this, PlaylistsActivity.class);
-//                myIntent.putExtra("key", value); //Optional parameters
-                MainActivity.this.startActivity(myIntent);
+        if (uri != null) {
+            AuthenticationResponse response = SpotifyAuthentication.parseOauthResponse(uri);
+            Intent myIntent = new Intent(MainActivity.this, PlaylistsActivity.class);
+            Config playerConfig = new Config(this, response.getAccessToken(), getResources().getString(R.string.CLIENT_ID));
+            GlobalConfig.getInstance().setPlayerConfig(playerConfig);
+            //myIntent.putExtra("key", value); //Optional parameters
+            MainActivity.this.startActivity(myIntent);
         }
     }
 
@@ -83,7 +86,7 @@ public class MainActivity extends Activity implements PlayerNotificationCallback
     }
 
     public void runSpotifyAuth(View view) {
-        SpotifyAuthentication.openAuthWindow(CLIENT_ID, "token", REDIRECT_URI,
+        SpotifyAuthentication.openAuthWindow(getResources().getString(R.string.CLIENT_ID), "token", getResources().getString(R.string.REDIRECT_URI),
                 new String[]{"user-read-private", "streaming"}, null, this);
     }
 

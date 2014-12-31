@@ -25,7 +25,6 @@ import com.spotify.sdk.android.playback.PlayerNotificationCallback;
 import com.spotify.sdk.android.playback.PlayerState;
 
 public class PlaylistsActivity extends ActionBarActivity  implements PlayerNotificationCallback, ConnectionStateCallback, CreatePlaylistDialogFragment.NoticeDialogListener, View.OnClickListener {
-    private static final String CLIENT_ID = "4dd6a9c11dbf412d944b981abb0f55ab";
     private Player mPlayer;
     private Button btnQrScan;
     private Button btnQrGenerate;
@@ -75,7 +74,7 @@ public class PlaylistsActivity extends ActionBarActivity  implements PlayerNotif
         Uri uri = intent.getData();
         if (uri != null) {
             AuthenticationResponse response = SpotifyAuthentication.parseOauthResponse(uri);
-            Config playerConfig = new Config(this, response.getAccessToken(), CLIENT_ID);
+            Config playerConfig = new Config(this, response.getAccessToken(), getResources().getString(R.string.CLIENT_ID));
             Spotify spotify = new Spotify();
             Log.d("test", "made spotify object");
             mPlayer = spotify.getPlayer(playerConfig, this, new Player.InitializationObserver() {
