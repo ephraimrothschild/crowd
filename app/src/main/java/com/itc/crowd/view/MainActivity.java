@@ -34,6 +34,7 @@ public class MainActivity extends Activity implements PlayerNotificationCallback
             AuthenticationResponse response = SpotifyAuthentication.parseOauthResponse(uri);
             Config playerConfig = new Config(this, response.getAccessToken(), getResources().getString(R.string.CLIENT_ID));
             GlobalConfig.getInstance().setPlayerConfig(playerConfig);
+
             //myIntent.putExtra("key", value); //Optional parameters
             Intent myIntent = new Intent(MainActivity.this, PlaylistsActivity.class);
             MainActivity.this.startActivity(myIntent);

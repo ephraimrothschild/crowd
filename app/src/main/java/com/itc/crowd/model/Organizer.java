@@ -42,19 +42,17 @@ public class Organizer {
         }
     }
 
-    public void sortSongs (HashMap<String, Integer> songs) {
+    public static void sortSongs (HashMap<String, Integer> songs) {
         LinkedHashMap<String,Integer> sortedSongs = sortHashMapByValuesD(songs);
-        HashMap<String, Integer> copyofhashmap = new HashMap<>(songs);
-        Set<Entry<String,Integer>> originalentrySet = copyofhashmap.entrySet();
         List<Entry<String,Integer>> newentrySet = new ArrayList<>(sortedSongs.entrySet());
         songs.clear();
-        for (int i = 0; i < copyofhashmap.size(); i++) {
+        for (int i = 0; i < sortedSongs.size(); i++) {
             Entry<String,Integer> currentSet = newentrySet.get(i);
             songs.put(currentSet.getKey(),currentSet.getValue());
         }
     }
 
-    private LinkedHashMap sortHashMapByValuesD(HashMap passedMap) {
+    private static LinkedHashMap sortHashMapByValuesD(HashMap passedMap) {
         List mapKeys = new ArrayList(passedMap.keySet());
         List mapValues = new ArrayList(passedMap.values());
         Collections.sort(mapValues);
