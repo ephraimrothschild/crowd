@@ -6,8 +6,13 @@ import android.app.FragmentManager;
 import android.os.AsyncTask;
 import android.os.StrictMode;
 
+import com.google.gson.Gson;
+import com.itc.crowd.model.Organizer;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -17,13 +22,14 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 
-public class PlaylistsFromJsonAsync extends AsyncTask<Void, Integer, ArrayList<HashMap<String, String>>> {
+public class PlaylistsFromJsonAsync extends AsyncTask<Void, Integer, HashMap<Integer, String>> {
 
     private List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-    private ArrayList<HashMap<String, String>> playlists = new ArrayList<HashMap<String, String>>();
+    private HashMap<Integer, String> playlists = new LinkedHashMap<Integer, String>();
     private Activity activity;
     private String userMail;
 
@@ -53,29 +59,33 @@ public class PlaylistsFromJsonAsync extends AsyncTask<Void, Integer, ArrayList<H
     }
 
     @Override
-    protected ArrayList<HashMap<String, String>> doInBackground(Void... arg0) {
+    protected HashMap<Integer, String> doInBackground(Void... arg0) {
 
         HttpRequest request = new HttpRequest(nameValuePairs);
         String json = request.getJsonFromUrl(StaticHelpers.API_URL + StaticHelpers.PLAYLISTS_ENDPOINT);
+        Gson gson = new Gson();
 
         if(json == null){
             playlists = null;
         }
         else{
-            if(json != "timeout"){
-                Document doc = null;
-                try{
-                    doc = request.getDomElement(json); // getting DOM element
-                }
-                catch(DOMException e){
+            Document doc = null;
+            try{
+                doc = request.getDomElement(json); // getting DOM element
+            }
+            catch(DOMException e){
 
-                }
+            }
 
-                if(doc == null){
-                    playlists = null;
-                }
-                else{
-                    //PARSE JSON
+            if(doc == null){
+                playlists = null;
+            }
+            else{
+                try {
+                    playlists = Organizer.listPlaylists(new JSONObject(json));
+                    playlists.entrySet();
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
         }
