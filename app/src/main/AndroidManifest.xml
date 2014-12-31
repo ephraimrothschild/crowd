@@ -34,10 +34,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|keyboardHidden"
             android:name=".PlaylistsActivity"
-            android:label="@string/title_activity_playlists" >
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/title_activity_playlists"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".playlist"
+            android:label="@string/title_activity_playlist" >
         </activity>
     </application>
 

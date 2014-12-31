@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import android.app.DialogFragment;
 
@@ -24,10 +25,10 @@ import com.spotify.sdk.android.playback.Player;
 import com.spotify.sdk.android.playback.PlayerNotificationCallback;
 import com.spotify.sdk.android.playback.PlayerState;
 
-public class PlaylistsActivity extends ActionBarActivity  implements PlayerNotificationCallback, ConnectionStateCallback, CreatePlaylistDialogFragment.NoticeDialogListener, View.OnClickListener {
+public class PlaylistsActivity extends Activity  implements PlayerNotificationCallback, ConnectionStateCallback, CreatePlaylistDialogFragment.NoticeDialogListener, View.OnClickListener {
     private static final String CLIENT_ID = "4dd6a9c11dbf412d944b981abb0f55ab";
     private Player mPlayer;
-    private Button btnQrScan;
+    private ImageButton btnQrScan;
     private Button btnQrGenerate;
     private Button btnQrGenerate2;
 
@@ -36,7 +37,7 @@ public class PlaylistsActivity extends ActionBarActivity  implements PlayerNotif
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playlists);
-        btnQrScan = (Button)findViewById(R.id.btnQrScan);
+        btnQrScan = (ImageButton)findViewById(R.id.btnQrScan);
         btnQrScan.setOnClickListener(this);
         btnQrGenerate = (Button)findViewById(R.id.btnQrGenerate);
         btnQrGenerate.setOnClickListener(this);
