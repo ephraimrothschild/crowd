@@ -38,10 +38,10 @@ public class PlaylistsActivity extends ActionBarActivity  implements PlayerNotif
         setContentView(R.layout.activity_playlists);
         btnQrScan = (ImageButton)findViewById(R.id.btnQrScan);
         btnQrScan.setOnClickListener(this);
-        btnQrGenerate = (Button)findViewById(R.id.btnQrGenerate);
-        btnQrGenerate.setOnClickListener(this);
-        btnQrGenerate2 = (Button)findViewById(R.id.btnQrGenerate2);
-        btnQrGenerate2.setOnClickListener(this);
+        //btnQrGenerate = (Button)findViewById(R.id.btnQrGenerate);
+        //btnQrGenerate.setOnClickListener(this);
+        //btnQrGenerate2 = (Button)findViewById(R.id.btnQrGenerate2);
+        //btnQrGenerate2.setOnClickListener(this);
     }
 
 
@@ -161,16 +161,16 @@ public class PlaylistsActivity extends ActionBarActivity  implements PlayerNotif
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
             scanIntegrator.initiateScan(IntentIntegrator.QR_CODE_TYPES);
         }
-        else if(v.getId() == R.id.btnQrGenerate)
-        {
-            IntentIntegrator scanIntegrator = new IntentIntegrator(this);
-            scanIntegrator.shareText("New years party", "TEXT_TYPE");
-        }
-        else if(v.getId() == R.id.btnQrGenerate2)
-        {
-            IntentIntegrator scanIntegrator = new IntentIntegrator(this);
-            scanIntegrator.shareText("24th Birthday", "TEXT_TYPE");
-        }
+        //else if(v.getId() == R.id.btnQrGenerate)
+        //{
+        //    IntentIntegrator scanIntegrator = new IntentIntegrator(this);
+        //    scanIntegrator.shareText("New years party", "TEXT_TYPE");
+        //}
+        //else if(v.getId() == R.id.btnQrGenerate2)
+        //{
+        //    IntentIntegrator scanIntegrator = new IntentIntegrator(this);
+        //    scanIntegrator.shareText("24th Birthday", "TEXT_TYPE");
+        //}
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
