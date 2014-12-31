@@ -80,7 +80,7 @@ public class PlaylistsFromJsonAsync extends AsyncTask<Void, Integer, ArrayList<H
             }
         }
 
-        return mapErrCode;
+        return playlists;
     }
 
     @SuppressLint("NewApi")
@@ -92,7 +92,7 @@ public class PlaylistsFromJsonAsync extends AsyncTask<Void, Integer, ArrayList<H
 
         }
         else{
-            
+
             activity.setProgressBarIndeterminateVisibility(false);
         }
     }
