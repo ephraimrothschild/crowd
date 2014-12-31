@@ -5,6 +5,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_playlists">PlaylistsActivity</string>
+    <string name="CLIENT_ID">4dd6a9c11dbf412d944b981abb0f55ab</string>
+    <string name="REDIRECT_URI">crowd://callback</string>
     <string name="title_activity_playlist">playlist</string>
 
 </resources>

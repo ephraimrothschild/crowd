@@ -25,8 +25,7 @@ import com.spotify.sdk.android.playback.Player;
 import com.spotify.sdk.android.playback.PlayerNotificationCallback;
 import com.spotify.sdk.android.playback.PlayerState;
 
-public class PlaylistsActivity extends Activity  implements PlayerNotificationCallback, ConnectionStateCallback, CreatePlaylistDialogFragment.NoticeDialogListener, View.OnClickListener {
-    private static final String CLIENT_ID = "4dd6a9c11dbf412d944b981abb0f55ab";
+public class PlaylistsActivity extends ActionBarActivity  implements PlayerNotificationCallback, ConnectionStateCallback, CreatePlaylistDialogFragment.NoticeDialogListener, View.OnClickListener {
     private Player mPlayer;
     private ImageButton btnQrScan;
     private Button btnQrGenerate;
@@ -39,10 +38,10 @@ public class PlaylistsActivity extends Activity  implements PlayerNotificationCa
         setContentView(R.layout.activity_playlists);
         btnQrScan = (ImageButton)findViewById(R.id.btnQrScan);
         btnQrScan.setOnClickListener(this);
-        btnQrGenerate = (Button)findViewById(R.id.btnQrGenerate);
-        btnQrGenerate.setOnClickListener(this);
-        btnQrGenerate2 = (Button)findViewById(R.id.btnQrGenerate2);
-        btnQrGenerate2.setOnClickListener(this);
+        //btnQrGenerate = (Button)findViewById(R.id.btnQrGenerate);
+        //btnQrGenerate.setOnClickListener(this);
+        //btnQrGenerate2 = (Button)findViewById(R.id.btnQrGenerate2);
+        //btnQrGenerate2.setOnClickListener(this);
     }
 
 
@@ -76,7 +75,7 @@ public class PlaylistsActivity extends Activity  implements PlayerNotificationCa
         Uri uri = intent.getData();
         if (uri != null) {
             AuthenticationResponse response = SpotifyAuthentication.parseOauthResponse(uri);
-            Config playerConfig = new Config(this, response.getAccessToken(), CLIENT_ID);
+            Config playerConfig = new Config(this, response.getAccessToken(), getResources().getString(R.string.CLIENT_ID));
             Spotify spotify = new Spotify();
             Log.d("test", "made spotify object");
             mPlayer = spotify.getPlayer(playerConfig, this, new Player.InitializationObserver() {
@@ -162,16 +161,16 @@ public class PlaylistsActivity extends Activity  implements PlayerNotificationCa
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
             scanIntegrator.initiateScan(IntentIntegrator.QR_CODE_TYPES);
         }
-        else if(v.getId() == R.id.btnQrGenerate)
-        {
-            IntentIntegrator scanIntegrator = new IntentIntegrator(this);
-            scanIntegrator.shareText("New years party", "TEXT_TYPE");
-        }
-        else if(v.getId() == R.id.btnQrGenerate2)
-        {
-            IntentIntegrator scanIntegrator = new IntentIntegrator(this);
-            scanIntegrator.shareText("24th Birthday", "TEXT_TYPE");
-        }
+        //else if(v.getId() == R.id.btnQrGenerate)
+        //{
+        //    IntentIntegrator scanIntegrator = new IntentIntegrator(this);
+        //    scanIntegrator.shareText("New years party", "TEXT_TYPE");
+        //}
+        //else if(v.getId() == R.id.btnQrGenerate2)
+        //{
+        //    IntentIntegrator scanIntegrator = new IntentIntegrator(this);
+        //    scanIntegrator.shareText("24th Birthday", "TEXT_TYPE");
+        //}
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
