@@ -1,12 +1,14 @@
-package com.itc.crowd;
+package com.itc.crowd.view;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.itc.crowd.R;
 
-public class playlist extends ActionBarActivity {
+
+public class PlaylistActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
