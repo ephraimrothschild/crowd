@@ -5,11 +5,13 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.WindowManager;
 import android.widget.Button;
+
+import com.itc.crowd.view.PlaylistActivity;
 
 public class CreatePlaylistDialogFragment extends DialogFragment {
     /* The activity that creates an instance of this dialog fragment must
@@ -51,7 +53,9 @@ public class CreatePlaylistDialogFragment extends DialogFragment {
                 .setPositiveButton("Create", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        mListener.onDialogPositiveClick(CreatePlaylistDialogFragment.this);
+                        Intent myIntent = new Intent(getActivity(), PlaylistActivity.class);
+                         getActivity().startActivity(myIntent);
+//                        mListener.onDialogPositiveClick(CreatePlaylistDialogFragment.this);
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

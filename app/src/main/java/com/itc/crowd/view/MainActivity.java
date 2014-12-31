@@ -1,4 +1,4 @@
-package com.itc.crowd;
+package com.itc.crowd.view;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,8 +6,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
 
+import com.itc.crowd.GlobalConfig;
+import com.itc.crowd.R;
 import com.spotify.sdk.android.Spotify;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
 import com.spotify.sdk.android.authentication.SpotifyAuthentication;
@@ -31,10 +32,10 @@ public class MainActivity extends Activity implements PlayerNotificationCallback
         Uri uri = intent.getData();
         if (uri != null) {
             AuthenticationResponse response = SpotifyAuthentication.parseOauthResponse(uri);
-            Intent myIntent = new Intent(MainActivity.this, PlaylistsActivity.class);
             Config playerConfig = new Config(this, response.getAccessToken(), getResources().getString(R.string.CLIENT_ID));
             GlobalConfig.getInstance().setPlayerConfig(playerConfig);
             //myIntent.putExtra("key", value); //Optional parameters
+            Intent myIntent = new Intent(MainActivity.this, PlaylistsActivity.class);
             MainActivity.this.startActivity(myIntent);
         }
     }

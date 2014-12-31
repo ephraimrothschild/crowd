@@ -1,9 +1,8 @@
-package com.itc.crowd;
+package com.itc.crowd.view;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -16,6 +15,8 @@ import android.app.DialogFragment;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.itc.crowd.CreatePlaylistDialogFragment;
+import com.itc.crowd.R;
 import com.spotify.sdk.android.Spotify;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
 import com.spotify.sdk.android.authentication.SpotifyAuthentication;
@@ -25,7 +26,7 @@ import com.spotify.sdk.android.playback.Player;
 import com.spotify.sdk.android.playback.PlayerNotificationCallback;
 import com.spotify.sdk.android.playback.PlayerState;
 
-public class PlaylistsActivity extends Activity  implements PlayerNotificationCallback, ConnectionStateCallback, CreatePlaylistDialogFragment.NoticeDialogListener, View.OnClickListener {
+public class PlaylistsActivity extends Activity  implements PlayerNotificationCallback, ConnectionStateCallback, CreatePlaylistDialogFragment.NoticeDialogListener {
     private Player mPlayer;
     private ImageButton btnQrScan;
     private Button btnQrGenerate;
@@ -36,8 +37,6 @@ public class PlaylistsActivity extends Activity  implements PlayerNotificationCa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playlists);
-        btnQrScan = (ImageButton)findViewById(R.id.btnQrScan);
-        btnQrScan.setOnClickListener(this);
         //btnQrGenerate = (Button)findViewById(R.id.btnQrGenerate);
         //btnQrGenerate.setOnClickListener(this);
         //btnQrGenerate2 = (Button)findViewById(R.id.btnQrGenerate2);
@@ -155,12 +154,9 @@ public class PlaylistsActivity extends Activity  implements PlayerNotificationCa
         dialog.getDialog().cancel();
     }
 
-    public void onClick(View v){
-        if(v.getId()==R.id.btnQrScan)
-        {
+    public void onQRClick(View v){
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
             scanIntegrator.initiateScan(IntentIntegrator.QR_CODE_TYPES);
-        }
         //else if(v.getId() == R.id.btnQrGenerate)
         //{
         //    IntentIntegrator scanIntegrator = new IntentIntegrator(this);
