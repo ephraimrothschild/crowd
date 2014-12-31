@@ -33,7 +33,7 @@ public class PlayerHelper extends Activity implements PlayerNotificationCallback
     private Player _spotifyPlayer;
     private SpotifyWebApiHelper _spotifyHelper;
     PlayerHelperListener _listener;
-
+    private boolean _isCleaned;
 
     private SpotifyWebApiHelper getSpotifyHelper()
     {
@@ -60,6 +60,22 @@ public class PlayerHelper extends Activity implements PlayerNotificationCallback
                 Log.e("PlayerHelper", "Could not initialize player: " + throwable.getMessage());
             }
         });
+        _isCleaned = false;
+    }
+
+    public void CleanUp()
+    {
+        if(_isCleaned)
+            return;
+        Spotify.destroyPlayer(this);
+        _isCleaned = true;
+    }
+
+    @Override
+    public void finalize()
+    {
+        if(!_isCleaned)
+            CleanUp();
     }
 
     public void AttachListener(PlayerHelperListener listener)

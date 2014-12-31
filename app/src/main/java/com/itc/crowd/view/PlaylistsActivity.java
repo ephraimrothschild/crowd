@@ -197,11 +197,12 @@ public class PlaylistsActivity extends Activity  implements PlayerNotificationCa
         }
     }
 
+    private PlayerHelper _playerHelper;
     public void onButtonClick(View v)
     {
-        PlayerHelper playerHelper = new PlayerHelper();
-        playerHelper.AttachListener(this);
-        playerHelper.PlayTrack("2TpxZ7JUBn3uw46aR7qd6V");
+        _playerHelper = new PlayerHelper();
+        _playerHelper.AttachListener(this);
+        _playerHelper.PlayTrack("2TpxZ7JUBn3uw46aR7qd6V");
     }
 
     public void onTrackArtists(String artists)
@@ -217,5 +218,6 @@ public class PlaylistsActivity extends Activity  implements PlayerNotificationCa
     public void onTrackAlbumImages(List<String> imageUrls)
     {
         Log.d("PlaylistsActivity", "Got album images event.");
+        _playerHelper.CleanUp();
     }
 }
