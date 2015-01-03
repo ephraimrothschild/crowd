@@ -49,7 +49,7 @@ public class PlaylistsActivity extends Activity  implements PlayerNotificationCa
         //btnQrGenerate2 = (Button)findViewById(R.id.btnQrGenerate2);
         //btnQrGenerate2.setOnClickListener(this);
 
-        final ListView listView = (ListView) findViewById(R.id.listview);
+        final ListView listView = (ListView) findViewById(R.id.playlistsScroll);
 
         // Defined Array values to show in ListView
         String[] values = new String[] { "Android List View",
@@ -76,7 +76,7 @@ public class PlaylistsActivity extends Activity  implements PlayerNotificationCa
         // Forth - the Array of data
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, values);
+                R.layout.story_card, R.id.story_title, values);
 
 
         // Assign adapter to ListView

@@ -2,9 +2,9 @@ package com.itc.crowd;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.os.AsyncTask;
-import android.os.StrictMode;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.itc.crowd.model.Organizer;
@@ -15,8 +15,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -26,10 +24,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 
-public class PlaylistsFromJsonAsync extends AsyncTask<Void, Integer, HashMap<Integer, String>> {
+public class PlaylistsFromJsonAsync extends AsyncTask<Void, Integer, HashMap<Integer, Playlist>> {
 
     private List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-    private HashMap<Integer, String> playlists = new LinkedHashMap<Integer, String>();
+    private HashMap<Integer, Playlist> playlists = new HashMap<Integer, Playlist>();
     private Activity activity;
     private String userMail;
 
@@ -59,7 +57,7 @@ public class PlaylistsFromJsonAsync extends AsyncTask<Void, Integer, HashMap<Int
     }
 
     @Override
-    protected HashMap<Integer, String> doInBackground(Void... arg0) {
+    protected HashMap<Integer, Playlist> doInBackground(Void... arg0) {
 
         HttpRequest request = new HttpRequest(nameValuePairs);
         String json = request.getJsonFromUrl(StaticHelpers.API_URL + StaticHelpers.PLAYLISTS_ENDPOINT);
@@ -82,8 +80,9 @@ public class PlaylistsFromJsonAsync extends AsyncTask<Void, Integer, HashMap<Int
             }
             else{
                 try {
-                    playlists = Organizer.listPlaylists(new JSONObject(json));
-                    playlists.entrySet();
+                    playlists = Organizer.generateFullPlaylistObjects(new JSONObject(json));
+
+                    publishProgress();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -104,6 +103,31 @@ public class PlaylistsFromJsonAsync extends AsyncTask<Void, Integer, HashMap<Int
         else{
 
             activity.setProgressBarIndeterminateVisibility(false);
+            final ListView listView = (ListView) activity.findViewById(R.id.playlistsScroll);
+            String[] values = new String[] { "Android List View",
+                    "Adapter implementation",
+                    "Simple List View In Android",
+                    "Create List View Android",
+                    "Android Example",
+                    "List View Source Code",
+                    "List View Array Adapter",
+                    "Android Example List View",
+                    "Adapter implementation",
+                    "Simple List View In Android",
+                    "Create List View Android",
+                    "Android Example",
+                    "List View Source Code",
+                    "List View Array Adapter",
+                    "Android Example List View"
+            };
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity,R.layout.story_card, R.id.story_title, values);
+//            StoryAdapter sAdapter = new StoryAdapter()
+            PlaylistsAdapter padapter = new PlaylistsAdapter(activity, new ArrayList<>(playlists.values()));
+//            adapter.setDropDownViewResource();
+
+
+            // Assign adapter to ListView
+            listView.setAdapter(padapter);
         }
     }
 }

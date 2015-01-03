@@ -43,8 +43,8 @@
         android:layout_below="@+id/playlistTitleBar"
         android:layout_above="@id/playlistFooterBar"
         android:layout_weight="1"
-        tools:listitem="@layout/story_card"
-        android:divider="@android:color/transparent"
+        android:fadingEdge="vertical"
+
         android:dividerHeight="5.0sp"
         android:paddingTop="5.0sp"/>
 

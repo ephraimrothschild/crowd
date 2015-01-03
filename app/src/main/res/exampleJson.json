@@ -1,0 +1,50 @@
+{
+    "playlists": [
+        {
+            "user": "wizzler"
+            "id": 19,
+            "name": "myplaylist1",
+            "songs": []
+        },
+        {
+            "user": "wizzler"
+            "id": 20,
+            "name": "myplaylist3",
+            "songs": []
+        },
+        {
+            "user": "wizzler1"
+            "id": 22,
+            "name": "myplaylist3",
+            "songs": []
+        },
+        {
+            "id": 23,
+            "name": "myplaylist3",
+            "songs": [
+                {
+                    "id": 52,
+                    "spotify_id": 21,
+                    "user_id": 3,
+                    "playlist_id": 23
+                },
+                {
+                    "id": 53,
+                    "spotify_id": 22,
+                    "user_id": 3,
+                    "playlist_id": 23
+                }
+            ]
+        },
+        {
+            "id": 24,
+            "name": "myplaylist3",
+            "songs": []
+        },
+        {
+            "id": 26,
+            "name": "david",
+            "songs": []
+        }
+    ]
+}

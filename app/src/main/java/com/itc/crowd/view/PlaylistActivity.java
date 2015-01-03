@@ -21,7 +21,7 @@ public class PlaylistActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playlist);
 
-        final ListView  listView = (ListView) findViewById(R.id.listview);
+        final ListView  listView = (ListView) findViewById(R.id.playlistScroll);
 
         // Defined Array values to show in ListView
         String[] values = new String[] { "Android List View",
@@ -41,7 +41,7 @@ public class PlaylistActivity extends ActionBarActivity {
         // Forth - the Array of data
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, values);
+                android.R.layout.simple_list_item_1, android.R.id.title, values);
 
 
         // Assign adapter to ListView
