@@ -32,10 +32,11 @@ public class MainActivity extends Activity implements PlayerNotificationCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = this.getSharedPreferences("CROWD_AUTH", Context.MODE_PRIVATE);
         if(sharedPref.getString("SPOTIFY_ACCESS_TOKEN", null) !=null) {
             Intent myIntent = new Intent(MainActivity.this, PlaylistsActivity.class);
             MainActivity.this.startActivity(myIntent);
+            finish();
         }
         else {
             setContentView(R.layout.login);
@@ -55,7 +56,7 @@ public class MainActivity extends Activity implements PlayerNotificationCallback
             //myIntent.putExtra("key", value); //Optional parameters
 
             StaticHelpers.SPOTIFY_ACCESS_TOKEN = response.getAccessToken();
-            SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences sharedPref = this.getSharedPreferences("CROWD_AUTH", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putString("SPOTIFY_ACCESS_TOKEN", StaticHelpers.SPOTIFY_ACCESS_TOKEN);
             editor.apply();

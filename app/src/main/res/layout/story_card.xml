@@ -3,28 +3,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:paddingTop="5sp"
-    android:paddingBottom="5sp">
+    android:padding="10sp">
 
-    <ImageView
-        android:id="@+id/story_image"
-        android:layout_width="74dp"
-        android:layout_height="48dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_launcher" />
+
+    <com.pkmmte.view.CircularImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:src="@drawable/song_image_small"
+        android:clickable="false"
+        app:border="true"
+        app:border_color="#1e8aaa"
+        app:border_width="3dp"
+        app:selector="false"
+        app:selector_color="#4403a9f4"
+        app:selector_stroke_color="#aa5677fc"
+        app:selector_stroke_width="3dp"
+        app:shadow="true"
+        android:id="@+id/story_image"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="5dip" >
+        android:layout_marginTop="5dp"
+        android:paddingLeft="15dip">
 
         <TextView
             android:id="@+id/story_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="title"
-            android:textStyle="bold" />
+            android:textSize="20sp"
+            android:textColor="#1e8aaa"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/story_text"

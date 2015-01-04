@@ -1,7 +1,10 @@
 package com.itc.crowd.view;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.app.DialogFragment;
 
@@ -23,6 +27,8 @@ import com.itc.crowd.PlayerHelper;
 import com.itc.crowd.PlaylistsFromJsonAsync;
 import com.itc.crowd.R;
 import com.itc.crowd.SpotifyWebApiHelper;
+import com.itc.crowd.StoryCard;
+import com.itc.crowd.adapters.StoryCardAdapter;
 import com.spotify.sdk.android.Spotify;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
 import com.spotify.sdk.android.authentication.SpotifyAuthentication;
@@ -32,7 +38,9 @@ import com.spotify.sdk.android.playback.Player;
 import com.spotify.sdk.android.playback.PlayerNotificationCallback;
 import com.spotify.sdk.android.playback.PlayerState;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.jar.Manifest;
 
 public class PlaylistsActivity extends Activity  implements PlayerNotificationCallback, ConnectionStateCallback, CreatePlaylistDialogFragment.NoticeDialogListener, PlayerHelper.PlayerHelperListener {
     private Player mPlayer;
@@ -46,6 +54,9 @@ public class PlaylistsActivity extends Activity  implements PlayerNotificationCa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playlists);
+        TextView txt = (TextView) findViewById(R.id.playlistTitle);
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Open_Sans/OpenSans-Light.ttf");
+        txt.setTypeface(font);
         //btnQrGenerate = (Button)findViewById(R.id.btnQrGenerate);
         //btnQrGenerate.setOnClickListener(this);
         //btnQrGenerate2 = (Button)findViewById(R.id.btnQrGenerate2);
@@ -54,22 +65,28 @@ public class PlaylistsActivity extends Activity  implements PlayerNotificationCa
         final ListView listView = (ListView) findViewById(R.id.playlistsScroll);
 
         // Defined Array values to show in ListView
-        String[] values = new String[] { "Android List View",
-                "Adapter implementation",
-                "Simple List View In Android",
-                "Create List View Android",
-                "Android Example",
-                "List View Source Code",
-                "List View Array Adapter",
-                "Android Example List View",
-                "Adapter implementation",
-                "Simple List View In Android",
-                "Create List View Android",
-                "Android Example",
-                "List View Source Code",
-                "List View Array Adapter",
-                "Android Example List View"
+        String[] values = new String[] {
+                "NEW YEARS PARTY",
+                "Saturday",
+                "24th Birthday",
+                "Party 3",
+                "Dutch Party"
+//                "Android List View",
+//                "List View Array Adapter",
+//                "Android Example List View",
+//                "Adapter implementation",
+//                "Simple List View In Android",
+//                "Create List View Android",
+//                "Android Example",
+//                "List View Source Code",
+//                "List View Array Adapter",
+//                "Android Example List View"
         };
+        ArrayList<StoryCard> slist = new ArrayList<>();
+
+        for (int i = 0; i < values.length; i++) {
+            slist.add(new StoryCard(values[i], String.valueOf(i)));
+        }
 
         // Define a new Adapter
         // First parameter - Context
@@ -77,12 +94,16 @@ public class PlaylistsActivity extends Activity  implements PlayerNotificationCa
         // Third parameter - ID of the TextView to which the data is written
         // Forth - the Array of data
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                R.layout.story_card, R.id.story_title, values);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+//                R.layout.story_card, R.id.story_title, values);
+        StoryCardAdapter storyCardAdapter = new StoryCardAdapter(this, slist);
+//        TextView storyTitle = (TextView) findViewById(R.id.story_title);
+//        Typeface storyTitleFont = Typeface.createFromAsset(getAssets(), "fonts/Open_Sans/OpenSans-Semibold.ttf");
+//        storyTitle.setTypeface(storyTitleFont);
 
 
         // Assign adapter to ListView
-        listView.setAdapter(adapter);
+        listView.setAdapter(storyCardAdapter);
 //        SpotifyWebApiHelper.getCurrentUserID();
 //        new PlaylistsFromJsonAsync(this, SpotifyWebApiHelper.getCurrentUserID()).execute();
 
@@ -125,13 +146,25 @@ public class PlaylistsActivity extends Activity  implements PlayerNotificationCa
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                return true;
+            case R.id.action_logout:
+                logOut();
+                Intent newInt = new Intent(PlaylistsActivity.this, MainActivity.class);
+                PlaylistsActivity.this.startActivity(newInt);
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
 
-        return super.onOptionsItemSelected(item);
+        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+
+
     }
 
     @Override
@@ -283,5 +316,12 @@ public class PlaylistsActivity extends Activity  implements PlayerNotificationCa
     {
         Log.d("PlaylistsActivity", "Got album images event.");
         _playerHelper.CleanUp();
+    }
+
+    public void logOut() {
+        SharedPreferences sharedPref = this.getSharedPreferences("CROWD_AUTH", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.clear();
+        editor.apply();
     }
 }

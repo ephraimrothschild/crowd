@@ -39,10 +39,10 @@ public class PlaylistsAdapter extends ArrayAdapter<Playlist> {
         Playlist playlist = getItem(position);
         TextView titleView = (TextView) view.findViewById(R.id.story_title);
         TextView textView = (TextView) view.findViewById(R.id.story_text);
-        ImageView imageView = (ImageView) view.findViewById(R.id.story_image);
+//        ImageView imageView = (ImageView) view.findViewById(R.id.story_image);
         titleView.setText(playlist.getName());
         textView.setText(playlist.getListOfSongs().get(0).toString());
-        ImageLoader im = ImageLoader.getInstance();
+//        ImageLoader im = ImageLoader.getInstance();
 //        imageView.setImageBitmap(im.loadImageSync(SpotifyWebApiHelper.getUser(playlist.getUser()).images.get(0).url));
         return view;
 

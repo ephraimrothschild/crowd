@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.itc.crowd.view.PlaylistsActivity">
+    tools:context="com.itc.crowd.view.PlaylistsActivity"
+    android:background="#ffffff">
 
     <ImageView
         android:layout_width="110dp"
@@ -48,7 +49,7 @@
         android:layout_weight="1"
         tools:listitem="@layout/story_card"
         android:dividerHeight="1sp"
-        android:paddingBottom="5.0sp" />
+        android:paddingBottom="0.0sp" />
 
     <ImageButton
         android:layout_width="100dp"
