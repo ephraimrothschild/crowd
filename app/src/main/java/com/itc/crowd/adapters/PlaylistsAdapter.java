@@ -1,6 +1,7 @@
 package com.itc.crowd.adapters;
 
 import android.app.Activity;
+import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,10 +40,14 @@ public class PlaylistsAdapter extends ArrayAdapter<Playlist> {
         Playlist playlist = getItem(position);
         TextView titleView = (TextView) view.findViewById(R.id.story_title);
         TextView textView = (TextView) view.findViewById(R.id.story_text);
-//        ImageView imageView = (ImageView) view.findViewById(R.id.story_image);
+        ImageView imageView = (ImageView) view.findViewById(R.id.story_image);
         titleView.setText(playlist.getName());
         textView.setText(playlist.getListOfSongs().get(0).toString());
-//        ImageLoader im = ImageLoader.getInstance();
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+//            Bitmap bitmap = im.loadImageSync(card.getImageURL(), new ImageSize(50,50));
+        ImageLoader im = ImageLoader.getInstance();
+        im.displayImage(SpotifyWebApiHelper.getUser(playlist.getUser()).images.get(0).url, imageView);
 //        imageView.setImageBitmap(im.loadImageSync(SpotifyWebApiHelper.getUser(playlist.getUser()).images.get(0).url));
         return view;
 

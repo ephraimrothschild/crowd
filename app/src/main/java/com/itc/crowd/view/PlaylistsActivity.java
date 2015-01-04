@@ -29,6 +29,7 @@ import com.itc.crowd.R;
 import com.itc.crowd.SpotifyWebApiHelper;
 import com.itc.crowd.StoryCard;
 import com.itc.crowd.adapters.StoryCardAdapter;
+import com.itc.crowd.model.Song;
 import com.spotify.sdk.android.Spotify;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
 import com.spotify.sdk.android.authentication.SpotifyAuthentication;
@@ -70,22 +71,22 @@ public class PlaylistsActivity extends Activity  implements PlayerNotificationCa
                 "Saturday",
                 "24th Birthday",
                 "Party 3",
-                "Dutch Party"
-//                "Android List View",
-//                "List View Array Adapter",
-//                "Android Example List View",
-//                "Adapter implementation",
-//                "Simple List View In Android",
-//                "Create List View Android",
-//                "Android Example",
-//                "List View Source Code",
-//                "List View Array Adapter",
-//                "Android Example List View"
+                "Dutch Party",
+                "Android List View",
+                "List View Array Adapter",
+                "Android Example List View",
+                "Adapter implementation",
+                "Simple List View In Android",
+                "Create List View Android",
+                "Android Example",
+                "List View Source Code",
+                "List View Array Adapter",
+                "Android Example List View"
         };
         ArrayList<StoryCard> slist = new ArrayList<>();
 
         for (int i = 0; i < values.length; i++) {
-            slist.add(new StoryCard(values[i], String.valueOf(i)));
+            slist.add(new StoryCard(values[i], String.valueOf(i), "http://i.stack.imgur.com/kdrpp.png"));
         }
 
         // Define a new Adapter
@@ -119,7 +120,7 @@ public class PlaylistsActivity extends Activity  implements PlayerNotificationCa
                 int itemPosition     = position;
 
                 // ListView Clicked item value
-                String  itemValue    = (String) listView.getItemAtPosition(position);
+                String  itemValue    = ((StoryCard) listView.getItemAtPosition(position)).getTitle();
 
                 // Show Alert
                 Toast.makeText(getApplicationContext(),

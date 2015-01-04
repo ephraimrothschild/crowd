@@ -1,7 +1,9 @@
 package com.itc.crowd.adapters;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import com.itc.crowd.R;
 import com.itc.crowd.StoryCard;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.pkmmte.view.CircularImageView;
 
 import java.util.List;
@@ -22,7 +25,7 @@ public class StoryCardAdapter extends ArrayAdapter<StoryCard> {
     public StoryCardAdapter(Activity activity, List<StoryCard> cards) {
         super(activity, 0, cards);
         this.activity = activity;
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getContext()).build();
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(activity).build();
         ImageLoader.getInstance().init(config);
     }
 
@@ -48,7 +51,12 @@ public class StoryCardAdapter extends ArrayAdapter<StoryCard> {
         textView.setText(card.getText());
         ImageLoader im = ImageLoader.getInstance();
         if (card.getImageURL() != null) {
-            imageView.setImageBitmap(im.loadImageSync(card.getImageURL()));
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+//            Bitmap bitmap = im.loadImageSync(card.getImageURL(), new ImageSize(50,50));
+            im.displayImage(card.getImageURL(), imageView);
+//            imageView.setImageBitmap(bitmap);
         } else {
 //            RoundedImageView.getCroppedBitmap(im.loadImageSync(R.drawable.home_screen))
 //            imageView.setImageResource(R.drawable.home_screen);

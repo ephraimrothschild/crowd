@@ -8,17 +8,17 @@
 
     <com.pkmmte.view.CircularImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:src="@drawable/song_image_small"
         android:clickable="false"
         app:border="true"
         app:border_color="#1e8aaa"
-        app:border_width="3dp"
+        app:border_width="2dp"
         app:selector="false"
         app:selector_color="#4403a9f4"
         app:selector_stroke_color="#aa5677fc"
-        app:selector_stroke_width="3dp"
+        app:selector_stroke_width="2dp"
         app:shadow="true"
         android:id="@+id/story_image"/>
 
