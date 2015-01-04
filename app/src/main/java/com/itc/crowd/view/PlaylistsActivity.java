@@ -20,7 +20,9 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.itc.crowd.CreatePlaylistDialogFragment;
 import com.itc.crowd.PlayerHelper;
+import com.itc.crowd.PlaylistsFromJsonAsync;
 import com.itc.crowd.R;
+import com.itc.crowd.SpotifyWebApiHelper;
 import com.spotify.sdk.android.Spotify;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
 import com.spotify.sdk.android.authentication.SpotifyAuthentication;
@@ -81,6 +83,8 @@ public class PlaylistsActivity extends Activity  implements PlayerNotificationCa
 
         // Assign adapter to ListView
         listView.setAdapter(adapter);
+//        SpotifyWebApiHelper.getCurrentUserID();
+//        new PlaylistsFromJsonAsync(this, SpotifyWebApiHelper.getCurrentUserID()).execute();
 
 
         // ListView Item Click Listener

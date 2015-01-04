@@ -1,6 +1,8 @@
 package com.itc.crowd.view;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.content.Intent;
 import android.net.Uri;
@@ -30,8 +32,16 @@ public class MainActivity extends Activity implements PlayerNotificationCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        if(sharedPref.getString("SPOTIFY_ACCESS_TOKEN", null) !=null) {
+            Intent myIntent = new Intent(MainActivity.this, PlaylistsActivity.class);
+            MainActivity.this.startActivity(myIntent);
+        }
+        else {
+            setContentView(R.layout.login);
+        }
     }
+
     @Override
     protected void onNewIntent(Intent intent) {
         Log.d("test", "started intent");
@@ -40,15 +50,21 @@ public class MainActivity extends Activity implements PlayerNotificationCallback
         if (uri != null) {
             AuthenticationResponse response = SpotifyAuthentication.parseOauthResponse(uri);
             Config playerConfig = new Config(this, response.getAccessToken(), getResources().getString(R.string.CLIENT_ID));
-            GlobalConfig.getInstance().setPlayerConfig(playerConfig);
+            GlobalConfig.setPlayerConfig(playerConfig);
 
             //myIntent.putExtra("key", value); //Optional parameters
 
             StaticHelpers.SPOTIFY_ACCESS_TOKEN = response.getAccessToken();
+            SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("SPOTIFY_ACCESS_TOKEN", StaticHelpers.SPOTIFY_ACCESS_TOKEN);
+            editor.apply();
 
 
             Intent myIntent = new Intent(MainActivity.this, PlaylistsActivity.class);
             MainActivity.this.startActivity(myIntent);
+
+            onDestroy();
         }
     }
 

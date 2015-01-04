@@ -47,7 +47,7 @@ public class PlayerHelper extends Activity implements PlayerNotificationCallback
     public PlayerHelper()
     {
         _spotify = new Spotify();
-        _spotifyPlayer = _spotify.getPlayer(GlobalConfig.getInstance().getPlayerConfig(), this, new Player.InitializationObserver() {
+        _spotifyPlayer = _spotify.getPlayer(GlobalConfig.getPlayerConfig(), this, new Player.InitializationObserver() {
             @Override
             public void onInitialized() {
                 _spotifyPlayer.addConnectionStateCallback(PlayerHelper.this);

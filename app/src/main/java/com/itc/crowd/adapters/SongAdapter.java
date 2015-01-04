@@ -1,4 +1,4 @@
-package com.itc.crowd;
+package com.itc.crowd.adapters;
 
 import java.util.List;
 

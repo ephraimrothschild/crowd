@@ -12,26 +12,32 @@ import retrofit.Callback;
 public final class SpotifyWebApiHelper {
     private static SpotifyApi _spotifyApi;
     private static User _user;
+    private static SpotifyService service;
 
     private static SpotifyApi getSpotifyApi()
     {
         if(_spotifyApi == null)
         {
             _spotifyApi = new SpotifyApi();
-            _spotifyApi.setAccessToken(GlobalConfig.getInstance().getPlayerConfig().oauthToken);
+            _spotifyApi.setAccessToken(StaticHelpers.SPOTIFY_ACCESS_TOKEN);
         }
         return _spotifyApi;
     }
 
     public static SpotifyService getSpotifyService() {
-        return getSpotifyApi().getService();
+        if (service == null) service = getSpotifyApi().getService();
+        return service;
     }
 
-    private User getCurrentUser()
+    private static User getCurrentUser()
     {
         if(_user == null)
-            _user = getSpotifyApi().getService().getMe();
+            _user = getSpotifyService().getMe();
         return _user;
+    }
+
+    public static String getCurrentUserID() {
+        return getCurrentUser().id;
     }
 
     public static User getUser(String userEmail) {

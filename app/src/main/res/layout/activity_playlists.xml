@@ -79,15 +79,14 @@
 
     <ImageButton
         android:layout_width="45dp"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:scaleType="fitCenter"
         android:background="@null"
         android:src="@drawable/join_playlist_button"
         android:id="@+id/btnQrScan"
-        android:layout_below="@+id/imageView2"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:onClick="onQRClick"/>
+        android:onClick="onQRClick"
+        android:layout_above="@+id/playlistsScroll"
+        android:layout_alignParentEnd="true" />
 
     <!--<Button-->
         <!--android:layout_width="wrap_content"-->
