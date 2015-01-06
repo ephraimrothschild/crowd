@@ -61,7 +61,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:onClick="onOpenCreatePlaylist"
-        android:layout_alignBottom="@+id/playlistsFooterBar"/>
+        android:layout_alignBottom="@+id/playlistsFooterBar"
+        android:layout_marginBottom="10dp" />
 
     <TextView
         android:layout_width="wrap_content"
